@@ -18,6 +18,9 @@ services:
     container_name: php-fpm.${APP_NAMESPACE:-johncms}
     depends_on:
       - mariadb
+    environment:
+      CURRENT_UID: ${CURRENT_UID:-1000}
+      CURRENT_GID: ${CURRENT_GID:-1000}
     volumes:
       - .:/app
       - ./.docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
