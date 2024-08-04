@@ -34,7 +34,7 @@ $total = $db->query(
 
 if ($total) {
     $req = $db->query(
-        "SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
+        "SELECT `users`.`id`, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`ip`, MAX(`cms_mail`.`time`) AS `time`
 		FROM `cms_mail`
 		LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
 		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
@@ -42,7 +42,7 @@ if ($total) {
 		AND `cms_mail`.`delete`!='" . $user->id . "'
 		AND `cms_mail`.`sys`='0'
 		AND `cms_contact`.`ban`!='1'
-		GROUP BY `cms_mail`.`user_id`
+		GROUP BY `users`.`id`, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`ip`
 		ORDER BY MAX(`cms_mail`.`time`) DESC
 		LIMIT " . $start . ',' . $user->config->kmess
     );
